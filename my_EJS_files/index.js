@@ -24,5 +24,31 @@ app.get("/rolldice",(req,res)=>{
     res.render("rolldice.ejs",{dataval})
 
     //roll dice m likh k kiya jo
-    // res.render("rolldice.ejs");
+    // res.render("rolldice.ejs");    
+})
+
+//============================================================
+//creating instagram template //instagram.ejs
+
+// app.get("/ig/:username",(req,res)=>{
+//     let {username}=req.params;
+//     const followers=["adam","steave","tony","banner","thor"]
+//     console.log(username);
+//     res.render("instagram.ejs",{username,followers})
+// }); 
+//----------------------------------------------------------------
+
+//creating instagram page taking data from data base //instapage.ejs
+
+app.get("/ig/:username",(req,res)=>{
+    const instadata=require("./data.json");  //requering the data file
+    let {username}=req.params;
+    const data=instadata[username];
+    console.log(data);
+    if(data){
+        res.render("instapages.ejs",{data});
+    }
+    else{
+        res.render("error.ejs");
+    }
 })

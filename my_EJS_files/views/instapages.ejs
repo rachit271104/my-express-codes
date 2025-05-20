@@ -1,0 +1,25 @@
+<!-- this is insta page taking data from data base(data.json) -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>insta_page</title>
+ </head>
+ <body>
+    <h1>this page belongs to <%= data.name %></h1>
+    <br>
+    <button>followers</button><button>following</button>
+
+    <p>followers: <%= data.followers %></p>
+    <p>following: <%= data.following %></p>
+    <hr>
+    <%for(let post of data.posts){%>
+       <span>
+        <img src="<%= post.image %>" alt="img" width="300">
+        <p>likes:<%= post.likes %> &nbsp; &nbsp;&nbsp; comments:<%= post.comments %></p>
+        </span>
+    <%}%>
+
+ </body>
+ </html>

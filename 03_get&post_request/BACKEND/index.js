@@ -9,11 +9,10 @@ app.listen(port,()=>{
 })
 
 app.get("/register",(req,res)=>{
-    let {user,password}=req.query
+    let {user,password}=req.query   // this is how we get the data from the query string
     res.send(`standard get request,welcome ${user}`);
 })
 
 app.post("/register",(req,res)=>{
-    
     res.send("standard post req");
 })

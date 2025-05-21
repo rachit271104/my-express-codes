@@ -1,0 +1,10 @@
+/* inthe public folder we make all the css and js files */
+
+body{
+    background-color: gray;
+}
+
+img{
+    height: 100px;
+    width: 100px;
+}

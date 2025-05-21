@@ -1,11 +1,8 @@
 <!-- this is insta page taking data from data base(data.json) -->
- <!DOCTYPE html>
- <html lang="en">
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>insta_page</title>
- </head>
+
+<!-- making the deader pae=rt a sub template -->
+<%- include("includes/head.ejs") %>
+
  <body>
     <h1>this page belongs to <%= data.name %></h1>
     <br>
@@ -22,4 +19,5 @@
     <%}%>
 
  </body>
+ <script src="/app.js"></script>
  </html>

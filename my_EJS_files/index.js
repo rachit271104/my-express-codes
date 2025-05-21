@@ -40,8 +40,31 @@ app.get("/rolldice",(req,res)=>{
 
 //creating instagram page taking data from data base //instapage.ejs
 
+// app.get("/ig/:username",(req,res)=>{
+//     const instadata=require("./data.json");  //requering the data file
+//     let {username}=req.params;
+//     const data=instadata[username];
+//     console.log(data);
+//     if(data){
+//         res.render("instapages.ejs",{data});
+//     }
+//     else{
+//         res.render("error.ejs");
+//     }
+// })
+
+//-----------------------------------------------------------------------------
+
+//using with static files(ie. public folder(which has css and js files));
+
+//app.use(express.static("public")); //using our static files
+// but we use
+//
+app.use(express.static(path.join(__dirname,"/public/css")));
+app.use(express.static(path.join(__dirname,"/public/js")));
+
 app.get("/ig/:username",(req,res)=>{
-    const instadata=require("./data.json");  //requering the data file
+    const instadata=require("./data.json");  
     let {username}=req.params;
     const data=instadata[username];
     console.log(data);

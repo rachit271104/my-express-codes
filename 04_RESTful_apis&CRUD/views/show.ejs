@@ -1,0 +1,45 @@
+<!-- ek single post ki details,this will show -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>show single post</title>
+    <link rel="stylesheet" href="/show.css">
+</head>
+<body>
+    <h1>the individual post having id : </h1>
+    <H2>User name : </H2>
+    <h3>Content : </h3>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>show single post</title>
+  <link rel="stylesheet" href="/show.css">
+</head>
+<body>
+  <h1>the individual post having id : <%= post.id %></h1>
+
+  <!-- Combined box -->
+  <div class="post-box">
+    <h2>@<%= post.username %></h2>
+    <p><%= post.content %></p>
+  </div>
+
+  <!-- Separate boxes -->
+  <div class="user-box">
+    <h3>User name:</h3>
+    <p><%= post.username %></p>
+  </div>
+
+  <div class="content-box">
+    <h3>Content:</h3>
+    <p><%= post.content %></p>
+  </div>
+</body>
+</html>

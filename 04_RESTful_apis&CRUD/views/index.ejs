@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>all posts</title>
+</head>
+<body>
+    <h1>quora posts</h1>
+    <% for(post of posts){ %>
+        <div>
+            <h3 >@<%= post.username %></h3>
+            <h5 ><%= post.content %></h5>
+            <a class="btn" href="http://localhost:8080/posts/<%= post.id %>">See Post</a>        
+        </div>
+    <% } %>
+    <a class="btnn" href="http://localhost:8080/posts/new">create new post</a>
+</body>
+</html>

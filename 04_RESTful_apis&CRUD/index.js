@@ -8,6 +8,10 @@ const port=8080;
 
 const { v4: uuidv4 } = require('uuid');//requiring uuid package
 
+let methodOverride = require('method-override');  //requering override package
+app.use(methodOverride('_method')); //telling condition to override
+
+
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 
@@ -32,7 +36,7 @@ let posts=[
         content:"learning java",
     },
     {
-        id:"1a",
+        id:uuidv4(),
         username:"rohit",
         content:"mbbs kar ra h",
     },
@@ -70,11 +74,15 @@ app.get("/posts/:id",(req,res)=>{
 
 app.patch("/posts/:id",(req,res)=>{
     let {id}=req.params;
-let newcontent = req.body.content;
-
-    console.log(newcontent);
-    res.send("working");
+    let newcontent = req.body.content;
+    let post=posts.find((p)=>p.id===id);
+    post.content=newcontent;
+    console.log(post);
+    // res.send("working");
+    res.redirect("/posts")
 });
+
+// trial code tha error resolve kar ne ko
 
 // app.patch("/posts/:id", (req, res) => {
 //     console.log("Body received:", req.body); // Add this
@@ -95,3 +103,19 @@ let newcontent = req.body.content;
 //     post.content = newcontent;
 //     res.send("Post updated successfully.");
 // });
+
+//edit api
+app.get("/posts/:id/edit",(req,res)=>{
+    let {id}=req.params;
+    let post=posts.find((p)=>p.id===id);
+
+    // res.send("edit ");
+    res.render("edit.ejs",{post});
+})
+
+app.delete("/posts/:id",(req,res)=>{
+    let {id}=req.params;
+    posts=posts.filter((p)=>p.id!==id);
+    // res.send("delete");
+    res.redirect("/posts");
+})

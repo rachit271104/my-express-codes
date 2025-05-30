@@ -11,8 +11,9 @@
     <h1>EDIT POST</h1>
     <p>post ID : <%= post.id %></p>
     <p>Username : <%= post.username %></p>
-    <form action="/posts/<%= post.id %>?_method=DELETE" method="POST">
-  <button type="submit">Delete</button>
+    <form action="/posts/<%= post.id %>?_method=PATCH" method="POST">
+      <textarea name="content" id=""><%= post.content %></textarea>
+  <button type="submit">Update Changes</button>
 </form>
 </body>
 </html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>all users data</title>
+</head>
+<body>
+    <h1>on this page we show data of all the users</h1>
+
+     <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <% for(let i=0;i<count;i++){ %>
+    <tbody>
+      <tr>
+        <td><%= allusersdata[i].id %></td>
+        <td><%= allusersdata[i].username %></td>
+        <td><%= allusersdata[i].email %></td>
+      </tr>
+    </tbody>
+
+    <% } %>
+  </table>
+</body>
+</html>

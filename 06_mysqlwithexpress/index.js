@@ -8,26 +8,26 @@
 */
 
 
-const express=require('express');
-const app=express();
+const express = require('express');
+const app = express();
 
-const port =8080;
+const port = 8080;
 
 let methodOverride = require('method-override');  //requering override package
 app.use(methodOverride('_method')); //telling condition to override
 
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const path=require("path");
-app.set("view engine","ejs");
-app.set("views",path.join(__dirname,"views"));
+const path = require("path");
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static("public"));
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 
-app.listen(port, ()=>{
+app.listen(port, () => {
   console.log("listining on port 8080");
 })
 
@@ -41,62 +41,92 @@ const connection = mysql.createConnection({  // creating connection
   host: 'localhost',
   user: 'root',
   database: 'myfirstapp',
-  password:'1411471'
+  password: '1411471'
 });
 
-
-app.get("/",(req,res)=>{
+// home page showing the no. of users we have
+app.get("/", (req, res) => {
   // res.send("home page");
-  let q=`SELECT COUNT(*) FROM user`;
-  try{
-    connection.query(q,(err,result)=>{
-      if(err) throw err;
-      
+  let q = `SELECT COUNT(*) FROM user`;
+  try {
+    connection.query(q, (err, result) => {
+      if (err) throw err;
+
       // console.log(result[0]["COUNT(*)"]);
-      let countt=result[0]["COUNT(*)"];
-       res.render("index.ejs",{countt});
+      let countt = result[0]["COUNT(*)"];
+      res.render("index.ejs", { countt });
     })
-  }catch(err){
+  } catch (err) {
     console.log(err);
     res.send("some error ):");
   }
 
 })
 
-app.get("/user",(req,res)=>{
-  
-  try{
-    let q="select id,username,email from user";
-    connection.query(q,(err,result)=>{
-      if(err) throw err;
+//showing all the users
+app.get("/user", (req, res) => {
+  try {
+    let q = "select id,username,email from user";
+    connection.query(q, (err, result) => {
+      if (err) throw err;
       // console.log(result);
-      let allusersdata=result;
-      let count=result.length;
+      let allusersdata = result;
+      let count = result.length;
       console.log(count);
-      
       // res.send("this will show all the users");
-      res.render("showdata.ejs",{allusersdata,count});
+      res.render("showdata.ejs", { allusersdata, count });
     })
-  }catch(err){
+  } catch (err) {
     res.send("some error occured in showing all the users");
   }
 })
 
 
+//edit route 
+app.get("/user/:id/edit", (req, res) => {
+  // res.send('on this page we can change the email address of the user ');
+  let { id } = req.params;
+  let q = `SELECT * FROM user WHERE id= '${id}'`;
+  try {
+    connection.query(q, (err, result) => {
+      if (err) throw err;
+      // console.log(result);
+      let userinfo = result[0];
+      res.render("edit.ejs", { userinfo });
+    })
+  } catch (err) {
+    console.log('some error came');
+  }
+})
 
+//handeling the patch req to update the email id
+app.patch("/user/:id", (req, res) => {
+  let { id } = req.params;
+  let { password: formpass, newemail } = req.body;
+  let q = `SELECT * FROM user WHERE id= '${id}'`;
+  try {
+    connection.query(q, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      let userinfo = result[0];
 
+      if (formpass == userinfo.password) {
+        let update_q = `UPDATE user SET email='${newemail}' WHERE id='${id}'`;
+        connection.query(update_q, (err, result) => {
+          if (err) throw err;
+          res.redirect("/user");
+        })
+      }
+      else {
+        res.send("wrong pass");
+      }
 
+    })
+  } catch (err) {
+    console.log('some error came');
+  }
 
-
-
-
-
-
-
-
-
-
-
+})
 
 
 
@@ -126,3 +156,5 @@ app.get("/user",(req,res)=>{
 // }
 
 // //console.log(createRandomUser());
+
+

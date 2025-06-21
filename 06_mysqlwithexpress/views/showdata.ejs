@@ -22,7 +22,12 @@
         <td><%= allusersdata[i].id %></td>
         <td><%= allusersdata[i].username %></td>
         <td><%= allusersdata[i].email %></td>
-      </tr>
+        <td>
+        <form action="/user/<%= allusersdata[i].id %>/edit" method="get">
+            <button>EDIT Username</button>
+        </form>
+        </td>
+      </tr> 
     </tbody>
 
     <% } %>

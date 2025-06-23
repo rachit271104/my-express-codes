@@ -4,12 +4,17 @@
  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/edit.css">
     <title>edit email address</title>
  </head>
  <body>
     <h1>to edit the email-id enter the password</h1>
     <h3>username: <%=userinfo.username  %></h3>
     <h3>id: <%= userinfo.id %></h3>
+
+    <% if (typeof error !== "undefined"){ %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
     <h3>current email-id: <%= userinfo.email %></h3>
     <form action="/user/<%= userinfo.id %>?_method=PATCH" method="post">
         <input type="text" name="newemail" placeholder="enter new e-mail id"> 

@@ -16,6 +16,9 @@ const port = 8080;
 let methodOverride = require('method-override');  //requering override package
 app.use(methodOverride('_method')); //telling condition to override
 
+// require uuid 
+const { v4: uuidv4 } = require('uuid');
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -66,7 +69,7 @@ app.get("/", (req, res) => {
 //showing all the users
 app.get("/user", (req, res) => {
   try {
-    let q = "select id,username,email from user";
+    let q = "select id,username,email from user ORDER BY username ASC";
     connection.query(q, (err, result) => {
       if (err) throw err;
       // console.log(result);
@@ -114,28 +117,64 @@ app.patch("/user/:id", (req, res) => {
         let update_q = `UPDATE user SET email='${newemail}' WHERE id='${id}'`;
         connection.query(update_q, (err, result) => {
           if (err) throw err;
-          res.redirect("/user");
+          result.redirect("/user");
         })
       }
       else {
-        res.send("wrong pass");
+        // res.send("wrong pass");
+        res.render("edit.ejs", { userinfo, error: "Wrong password, try again." })
       }
-
     })
   } catch (err) {
     console.log('some error came');
   }
+})
 
+// to add a new user
+app.get("/user/new", (req, res) => {
+  // res.send("new user page");
+  res.render("newuser.ejs");
+})
+
+//to add the user details in data_base & show it in the table
+app.post("/user", (req, res) => {
+  let { nusername, nemail, npassword } = req.body;
+  console.log(req.body);
+  //generate id by uuidv4 here
+  let id=uuidv4();
+  let q = `INSERT INTO user (id,username,email,password) VALUES ('${id}','${nusername}','${nemail}','${npassword}')`;
+  try {
+    connection.query(q,(err,result)=>{
+      if(err) throw err;
+      console.log(`entered in db data: ${result}`);
+      res.redirect("/user");
+    })
+  } catch (err) {
+    console.log("some error occurred");
+  }
+})  
+
+//api to delete a user
+app.delete("/user/:id",(req,res)=>{
+  // res.send("delete id");
+  let {id}=req.params;
+  let q=`DELETE FROM user WHERE id='${id}'`;
+  try {
+    connection.query(q,(err,result)=>{
+      if(err) throw err;
+      console.log(`user with ${id} deleted`);
+      res.redirect("/user");
+    })
+  } catch (err) {
+    console.log("some error occured");
+  }
 })
 
 
-
-
-
 //------------------------------------------------------------------------------
-// garbage 
+// garbage
 // try{
-//     connection.query(q,(err,result)=>{  //writing queries & handling err 
+//     connection.query(q,(err,result)=>{  //writing queries & handling err
 //         if(err) throw(err);
 //         console.log(result);
 //         console.log(result.length);

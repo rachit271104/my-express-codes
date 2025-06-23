@@ -1,0 +1,26 @@
+<!-- in this file -- code for new user -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New User</title>
+    <link rel="stylesheet" href="/newuser.css"> <!-- Optional: your CSS -->
+</head>
+<body>
+    <h1>Form To Add A New User</h1>
+
+    <form action="/user" method="POST">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="nusername" placeholder="Enter username" required><br><br>
+
+        <label for="email">Email ID:</label><br>
+        <input type="email" id="email" name="nemail" placeholder="Enter email ID" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="npassword" placeholder="Enter password" required><br><br>
+
+        <button type="submit">Add User</button>
+    </form>
+</body>
+</html>

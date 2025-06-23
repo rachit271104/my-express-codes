@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="showdata.css">
     <title>all users data</title>
 </head>
 <body>
     <h1>on this page we show data of all the users</h1>
-
+    <form action="/user/new" method="get">
+      <button>add new user</button>
+    </form>
      <table>
     <thead>
       <tr>
@@ -25,6 +28,9 @@
         <td>
         <form action="/user/<%= allusersdata[i].id %>/edit" method="get">
             <button>EDIT Username</button>
+        </form>
+        <form action="/user/<%= allusersdata[i].id %>/?_method=DELETE" method="post">
+          <button>DELETE User</button>
         </form>
         </td>
       </tr> 

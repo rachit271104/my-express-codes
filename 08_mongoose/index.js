@@ -32,11 +32,24 @@ const User = mongoose.model("User",userschema);
 
 //inserting data
 const user1=new User({username:"rachit",email:"rachit@gmil.com",age:20});
+
 //to save it in mongo
-user1.save() 
+// user1.save() ; //it is also returns an promise
 
+// const user2=new User({username:"eve",email:"eve@gmil.com",age:20});
+// user2.save().then((res)=>{
+//   console.log(res);
+// }).catch((err)=>{
+//   console.log(err);
+// })
 
-
+// INSERTMANY() Ex:-
+User.insertMany([
+  {username:"tony",email:"tony@gmil.com",age:40},
+  {username:"stark",email:"stark@gmil.com",age:30}
+]).then((res)=>{
+  console.log(res);
+})
 
 
 //-------------------------------------------------

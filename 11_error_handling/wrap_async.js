@@ -9,9 +9,9 @@ You’d need to put try-catch in every single route, which makes the code bulky/
     automatically forwards errors to Express’s error-handling middleware (via next(err)).
 */
 
-// sirf synntex h idhar 
+// sirf synntex h idhar the api wount work.
 
-// 
+ 
 
 // importing modules
 const Chat=require("./models/chat.js")
@@ -62,7 +62,7 @@ function wrap_async(fn){
 }
 
 // index route
-             // used werap_async func
+             // ! used werap_async func
 app.get("/chats",wrap_async( async (req,res)=>{
  
   let chats= await Chat.find();

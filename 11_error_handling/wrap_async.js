@@ -1,3 +1,16 @@
+/*
+🔹 What is wrapAsync?
+
+In Express, when you use async/await, if an error happens inside an async route, Express 
+won’t automatically catch it.
+You’d need to put try-catch in every single route, which makes the code bulky/heavy.
+
+👉 wrapAsync is a utility function that “wraps” your async route functions and 
+    automatically forwards errors to Express’s error-handling middleware (via next(err)).
+*/
+
+// sirf synntex h idhar 
+
 // 
 
 // importing modules
@@ -38,23 +51,28 @@ app.listen(port,()=>{
     console.log(`listining on port ${port}`);
 })
 
-// index route
+/*
+! making our wrap async function
+*/
 
-app.get("/chats", async (req,res)=>{
- try {
-   // res.send("chats route");
+function wrap_async(fn){
+    return function (req,res,next){
+        fn(req,res,next).catch((err)=> next(err));
+    }
+}
+
+// index route
+             // used werap_async func
+app.get("/chats",wrap_async( async (req,res)=>{
+ 
   let chats= await Chat.find();
-  //console.log(chats);
   res.render("index.ejs",{chats});
- } catch (error) {
-  next(error);
- }
-});
+ 
+}));
 
 
 //sending to new chat form
 app.get("/chats/new",(req,res)=>{
-  // res.send("new message form");
   res.render("msgform.ejs");
 })
 
@@ -82,41 +100,33 @@ app.post("/chats", (req,res)=>{
 
 
 // edit chat page api
-app.get("/chats/:id/edit",async (req,res)=>{
- try { // insted of try catch we use async_wrap func (see file in error_handling)
-   // res.send(`edit chat here`);
+app.get("/chats/:id/edit",wrap_async(  async (req,res)=>{
+
   let {id}=req.params;
   console.log(id);
   let chat= await Chat.findById(id);
   res.render("edit.ejs",{chat});
- } catch (error) {
-  next(error);
- }
 
-})
+}));
 
 //edited chat ko chats page m add kar na 
-app.put("/chats/:id",async (req,res)=>{
-  try {
+app.put("/chats/:id",wrap_async( async (req,res)=>{
+  
     let {id}=req.params;
   let {msg: newmsg}=req.body;
   let updatedchat= await Chat.findByIdAndUpdate(id, {msg:newmsg},{runValidators:true,new:true} )
   console.log(updatedchat);
   res.redirect("/chats");
-  } catch (err) {
-    next(err);
-  }
-})
+  
+}));
 
 
 //delete chat api
-app.delete("/chats/:id",async (req,res)=>{
-  try {
+app.delete("/chats/:id",wrap_async( async (req,res)=>{
+  
     let {id}=req.params;
   let deletedchat = await Chat.findByIdAndDelete(id);
   console.log(deletedchat);
   res.redirect("/chats");
-  } catch (err) {
-    next(err);
-  }
-})
+  
+}));

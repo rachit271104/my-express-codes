@@ -1,4 +1,5 @@
 //learning how to use cookies
+//! only how to send the cookies not how to parse(read) and access them 
 
 const express=require('express');
 const app=express();
@@ -13,7 +14,7 @@ app.get("/",(req,res)=>{
     res.send("home page");
 })
 
-// 
+// this only sends cookies
 app.get("/getcookie",(req,res)=>{
     res.cookie("greet","hello");  //we can send multiple cookies 
     res.cookie("welcome","home");

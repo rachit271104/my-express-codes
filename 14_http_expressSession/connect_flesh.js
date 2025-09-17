@@ -29,13 +29,28 @@ app.get("/register",(req,res)=>{
     req.session.name=name;
      // set flash message
     req.flash("success", "User registered successfully");
+    req.flash("err","user not registered");
     res.redirect('/hello');
 })
 app.get("/hello",(req,res)=>{
-    // res.send(`hello ${req.session.name}`);
-    res.render("connect_flesh.ejs",{name:req.session.name , msg:req.flash("success")});
-})                                                          //!display flash-msg
+    // res.send(`hello ${req.session.name}`);               //! insted of passing msg here we use req.local
+    // res.render("connect_flesh.ejs",{name:req.session.name , msg:req.flash("success")});
+                                                            //!display flash-msg
+    //why we use req.local 
+    // suppose we have multiple msg to display on conditions to sab ko obj me pass kar ne se aacha h ki local m variable kar do aur ejs m direct acces kar lo 
+    res.locals.message=req.flash("success");
+    res.render("connect_flesh.ejs",{name:req.session.name });
+})
 
+//the best way to do it is pass these res.locals.message=req.flash("success"); in a middleware
+//we write middleware at top but abhi likh diya h idhar par for understanding
+app.use((req,res,next)=>{
+    res.locals.message=req.flash("success");
+    res.locals.errors=req.flash("err");
+    next();
+})
+                                                          
+                                                             
 const port=8080;
 app.listen(port, ()=>{
     console.log("app is listning on port 8080");

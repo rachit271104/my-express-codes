@@ -28,8 +28,8 @@ app.get("/register",(req,res)=>{
     let {name="default"}= req.query;
     req.session.name=name;
      // set flash message
-    req.flash("success", "User registered successfully");
-    req.flash("err","user not registered");
+    req.flash("success", "User registered successfully");//creating it
+    req.flash("err","user not registered");              //creating it
     res.redirect('/hello');
 })
 app.get("/hello",(req,res)=>{
